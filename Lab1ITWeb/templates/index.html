@@ -1,0 +1,720 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+{% if not database %}
+
+<section class="start-screen">
+
+    <div class="start-card">
+
+        <div class="start-logo">
+            DB
+        </div>
+
+        <h1>
+            Table Database Manager
+        </h1>
+
+        <p>
+            Create a new database or open an existing JSON database.
+        </p>
+
+        <div class="start-actions">
+
+            <button type="button"
+                    class="primary-button large-button"
+                    onclick="document.getElementById('new-db-dialog').showModal()">
+                Create Database
+            </button>
+
+            <button type="button"
+                    class="secondary-button large-button"
+                    onclick="document.getElementById('open-db-input').click()">
+                Open Database
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% else %}
+
+
+<div class="application-layout">
+
+
+    <!-- ===================================================== -->
+    <!-- LEFT CONTROL PANEL                                    -->
+    <!-- ===================================================== -->
+
+    <aside class="control-sidebar">
+
+
+        <!-- ================================================= -->
+        <!-- TABLE                                             -->
+        <!-- ================================================= -->
+
+        <section class="control-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon">
+                    T
+                </div>
+
+                <span>
+                    TABLE
+                </span>
+
+            </div>
+
+
+            <div class="card-divider"></div>
+
+
+            <form method="post"
+                  action="{{ url_for('add_table') }}"
+                  class="control-form">
+
+                <label>
+                    Table name
+                </label>
+
+                <input type="text"
+                       name="table_name"
+                       placeholder="Enter table name"
+                       required>
+
+                <div class="two-buttons">
+
+                    <button type="submit"
+                            class="primary-button">
+                        Add Table
+                    </button>
+
+
+                    {% if active_table %}
+
+                    <button type="submit"
+                            class="danger-button"
+                            form="delete-table-form">
+                        Delete
+                    </button>
+
+                    {% else %}
+
+                    <button type="button"
+                            class="danger-button"
+                            disabled>
+                        Delete
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+            </form>
+
+
+            {% if active_table %}
+
+            <form id="delete-table-form"
+                  method="post"
+                  action="{{ url_for('delete_table') }}"
+                  onsubmit="return confirm('Delete this table?');">
+
+                <input type="hidden"
+                       name="table_name"
+                       value="{{ active_table.name }}">
+
+            </form>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- COLUMN                                            -->
+        <!-- ================================================= -->
+
+        <section class="control-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon">
+                    C
+                </div>
+
+                <span>
+                    COLUMN
+                </span>
+
+            </div>
+
+
+            <div class="card-divider"></div>
+
+
+            {% if active_table %}
+
+            <form method="post"
+                  action="{{ url_for('add_column') }}"
+                  class="control-form">
+
+                <input type="hidden"
+                       name="table_name"
+                       value="{{ active_table.name }}">
+
+
+                <div class="field-pair">
+
+                    <div>
+
+                        <label>
+                            Column name
+                        </label>
+
+                        <input type="text"
+                               name="column_name"
+                               placeholder="Column"
+                               required>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            Data type
+                        </label>
+
+                        <select id="column-type"
+                                name="type_name">
+
+                            {% for type in data_types %}
+
+                            <option value="{{ type }}">
+                                {{ type }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div id="bounds-panel"
+                     class="bounds-panel hidden">
+
+                    <div>
+
+                        <label>
+                            From
+                        </label>
+
+                        <input name="lower_bound"
+                               maxlength="1"
+                               placeholder="A">
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            To
+                        </label>
+
+                        <input name="upper_bound"
+                               maxlength="1"
+                               placeholder="Z">
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="primary-button full-button">
+                    Add Column
+                </button>
+
+            </form>
+
+
+            {% if active_table.columns %}
+
+            <form method="post"
+                  action="{{ url_for('delete_column') }}"
+                  class="control-form delete-column-form"
+                  onsubmit="return confirm('Delete selected column?');">
+
+                <input type="hidden"
+                       name="table_name"
+                       value="{{ active_table.name }}">
+
+                <select name="column_name">
+
+                    {% for column in active_table.columns %}
+
+                    <option value="{{ column.name }}">
+                        {{ column.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <button type="submit"
+                        class="danger-button full-button">
+                    Delete Column
+                </button>
+
+            </form>
+
+            {% endif %}
+
+
+            {% else %}
+
+            <p class="card-empty-text">
+                Create or select a table first.
+            </p>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- ROW                                               -->
+        <!-- ================================================= -->
+
+        <section class="control-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon">
+                    R
+                </div>
+
+                <span>
+                    ROW
+                </span>
+
+            </div>
+
+
+            <div class="card-divider"></div>
+
+
+            {% if active_table %}
+
+            <p class="card-description">
+                Manage rows of the selected table.
+            </p>
+
+
+            <form method="post"
+                  action="{{ url_for('add_row') }}">
+
+                <input type="hidden"
+                       name="table_name"
+                       value="{{ active_table.name }}">
+
+                <button type="submit"
+                        class="primary-button full-button"
+                        {% if not active_table.columns %}
+                        disabled
+                        {% endif %}>
+                    Add Row
+                </button>
+
+            </form>
+
+
+            <p class="small-hint">
+                Use the Delete button at the end of a row to remove it.
+            </p>
+
+
+            {% else %}
+
+            <p class="card-empty-text">
+                Create or select a table first.
+            </p>
+
+            {% endif %}
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- JOIN                                              -->
+        <!-- ================================================= -->
+
+        <section class="control-card">
+
+            <div class="card-heading">
+
+                <div class="card-icon">
+                    J
+                </div>
+
+                <div>
+
+                    <span>
+                        INDIVIDUAL OPERATION
+                    </span>
+
+                    <div class="variant-label">
+                        Variant 8
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-divider"></div>
+
+
+            <div class="join-title">
+                JOIN Tables
+            </div>
+
+
+            <p class="card-description">
+                Join two tables by a common field.
+            </p>
+
+
+            {% if database.tables | length >= 2 %}
+
+            <form method="post"
+                  action="{{ url_for('join_tables') }}"
+                  class="control-form">
+
+                <label>
+                    First table
+                </label>
+
+                <select id="join-first-table"
+                        name="first_table">
+
+                    {% for table in database.tables %}
+
+                    <option value="{{ table.name }}">
+                        {{ table.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label>
+                    Second table
+                </label>
+
+                <select id="join-second-table"
+                        name="second_table">
+
+                    {% for table in database.tables %}
+
+                    <option value="{{ table.name }}">
+                        {{ table.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label>
+                    Common field
+                </label>
+
+                <select id="join-common-field"
+                        name="common_field"></select>
+
+
+                <button type="submit"
+                        class="primary-button full-button">
+                    Join Tables
+                </button>
+
+            </form>
+
+
+            {% else %}
+
+            <p class="card-empty-text">
+                At least two tables are required.
+            </p>
+
+            {% endif %}
+
+        </section>
+
+    </aside>
+
+
+
+    <!-- ===================================================== -->
+    <!-- RIGHT WORKBOOK                                        -->
+    <!-- ===================================================== -->
+
+    <section class="workbook">
+
+
+        <!-- ================================================= -->
+        <!-- WORKBOOK HEADER                                   -->
+        <!-- ================================================= -->
+
+        <div class="workbook-header">
+
+            <div>
+
+                <div class="workbook-title">
+                    WORKBOOK
+                </div>
+
+                <div class="workbook-subtitle">
+                    Choose a table below and edit its data directly
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- WORKSHEET                                         -->
+        <!-- ================================================= -->
+
+        <div class="worksheet">
+
+
+            {% if active_table %}
+
+
+            {% if active_table.columns %}
+
+            <div class="table-wrapper">
+
+                <table class="database-table">
+
+                    <thead>
+
+                        <tr>
+
+                            {% for column in active_table.columns %}
+
+                            <th>
+
+                                <div class="column-name">
+                                    {{ column.name }}
+                                </div>
+
+                                <div class="column-type">
+                                    {{ column.display_type }}
+                                </div>
+
+                            </th>
+
+                            {% endfor %}
+
+                            <th class="action-header">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for row in active_table.rows %}
+
+                        {% set row_index = loop.index0 %}
+
+                        <tr>
+
+                            {% for column in active_table.columns %}
+
+                            {% set column_index = loop.index0 %}
+
+                            <td>
+
+                                <input type="text"
+                                       class="cell-input"
+                                       value="{{
+                                                row.values[column_index]
+                                                if column_index < row.values|length
+                                                else ''
+                                            }}"
+                                       data-table="{{ active_table.name }}"
+                                       data-row="{{ row_index }}"
+                                       data-column="{{ column.name }}">
+
+                            </td>
+
+                            {% endfor %}
+
+
+                            <td class="row-action-cell">
+
+                                <form method="post"
+                                      action="{{ url_for('delete_row') }}"
+                                      onsubmit="return confirm('Delete this row?');">
+
+                                    <input type="hidden"
+                                           name="table_name"
+                                           value="{{ active_table.name }}">
+
+                                    <input type="hidden"
+                                           name="row_index"
+                                           value="{{ row_index }}">
+
+                                    <button type="submit"
+                                            class="grid-delete-button">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+
+                            <td colspan="{{ active_table.columns|length + 1 }}"
+                                class="grid-empty">
+                                No rows yet. Use Add Row to create one.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="workspace-empty">
+
+                <div class="empty-icon">
+                    C
+                </div>
+
+                <h2>
+                    No columns
+                </h2>
+
+                <p>
+                    Add the first column using the COLUMN panel.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% else %}
+
+            <div class="workspace-empty">
+
+                <div class="empty-icon">
+                    T
+                </div>
+
+                <h2>
+                    No tables
+                </h2>
+
+                <p>
+                    Create the first table using the TABLE panel.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================================================= -->
+        <!-- TABLE TABS                                        -->
+        <!-- ================================================= -->
+
+        <nav class="sheet-tabs">
+
+            {% for table in database.tables %}
+
+            <a href="{{ url_for('index', table=table.name) }}"
+               class="
+                        sheet-tab
+                        {% if active_table and active_table.name == table.name %}
+                            active
+                        {% endif %}
+                    ">
+                {{ table.name }}
+            </a>
+
+            {% else %}
+
+            <div class="no-tabs">
+                No tables
+            </div>
+
+            {% endfor %}
+
+        </nav>
+
+    </section>
+
+</div>
+
+
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script>
+
+    window.TABLE_COLUMNS =
+        {{ table_columns | tojson }};
+
+</script>
+
+{% endblock %}

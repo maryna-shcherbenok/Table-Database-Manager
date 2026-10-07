@@ -1,0 +1,1207 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="Lab1IT.MainPage"
+
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F5F4">
+
+
+    <!-- ===================================================== -->
+    <!-- RESOURCES                                             -->
+    <!-- ===================================================== -->
+
+    <ContentPage.Resources>
+
+
+        <!-- CARD -->
+
+        <Style
+            x:Key="SectionCardStyle"
+            TargetType="Border">
+
+            <Setter
+                Property="BackgroundColor"
+                Value="White" />
+
+            <Setter
+                Property="Stroke"
+                Value="#D9DED9" />
+
+            <Setter
+                Property="StrokeThickness"
+                Value="1" />
+
+            <Setter
+                Property="Padding"
+                Value="13" />
+
+            <Setter
+                Property="StrokeShape"
+                Value="RoundRectangle 6" />
+
+        </Style>
+
+
+        <!-- SECTION TITLE -->
+
+        <Style
+            x:Key="SectionTitleStyle"
+            TargetType="Label">
+
+            <Setter
+                Property="FontSize"
+                Value="12" />
+
+            <Setter
+                Property="FontAttributes"
+                Value="Bold" />
+
+            <Setter
+                Property="TextColor"
+                Value="#217346" />
+
+            <Setter
+                Property="CharacterSpacing"
+                Value="0.8" />
+
+        </Style>
+
+
+        <!-- FIELD LABEL -->
+
+        <Style
+            x:Key="FieldLabelStyle"
+            TargetType="Label">
+
+            <Setter
+                Property="FontSize"
+                Value="11" />
+
+            <Setter
+                Property="TextColor"
+                Value="#666666" />
+
+        </Style>
+
+
+        <!-- ENTRY -->
+
+        <Style
+            x:Key="EditorStyle"
+            TargetType="Entry">
+
+            <Setter
+                Property="BackgroundColor"
+                Value="#FAFBFA" />
+
+            <Setter
+                Property="TextColor"
+                Value="#202020" />
+
+            <Setter
+                Property="PlaceholderColor"
+                Value="#909090" />
+
+            <Setter
+                Property="HeightRequest"
+                Value="38" />
+
+            <Setter
+                Property="FontSize"
+                Value="13" />
+
+        </Style>
+
+
+        <!-- GREEN BUTTON -->
+
+        <Style
+            x:Key="PrimaryButtonStyle"
+            TargetType="Button">
+
+            <Setter
+                Property="BackgroundColor"
+                Value="#217346" />
+
+            <Setter
+                Property="TextColor"
+                Value="White" />
+
+            <Setter
+                Property="FontSize"
+                Value="13" />
+
+            <Setter
+                Property="FontAttributes"
+                Value="Bold" />
+
+            <Setter
+                Property="HeightRequest"
+                Value="38" />
+
+            <Setter
+                Property="CornerRadius"
+                Value="5" />
+
+            <Setter
+                Property="Padding"
+                Value="10,4" />
+
+
+            <Setter
+                Property="VisualStateManager.VisualStateGroups">
+
+                <VisualStateGroupList>
+
+                    <VisualStateGroup x:Name="CommonStates">
+
+
+                        <VisualState x:Name="Normal">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#217346" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="PointerOver">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#2F8757" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1.015" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="Pressed">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#145C35" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="0.985" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="Disabled">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#AFCABC" />
+
+                                <Setter
+                                    Property="TextColor"
+                                    Value="#EEEEEE" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                    </VisualStateGroup>
+
+                </VisualStateGroupList>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- DELETE BUTTON -->
+
+        <Style
+            x:Key="DangerButtonStyle"
+            TargetType="Button">
+
+            <Setter
+                Property="BackgroundColor"
+                Value="#FDECEA" />
+
+            <Setter
+                Property="TextColor"
+                Value="#B42318" />
+
+            <Setter
+                Property="FontSize"
+                Value="13" />
+
+            <Setter
+                Property="HeightRequest"
+                Value="38" />
+
+            <Setter
+                Property="CornerRadius"
+                Value="5" />
+
+            <Setter
+                Property="Padding"
+                Value="10,4" />
+
+
+            <Setter
+                Property="VisualStateManager.VisualStateGroups">
+
+                <VisualStateGroupList>
+
+                    <VisualStateGroup x:Name="CommonStates">
+
+
+                        <VisualState x:Name="Normal">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#FDECEA" />
+
+                                <Setter
+                                    Property="TextColor"
+                                    Value="#B42318" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="PointerOver">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#F7D5D1" />
+
+                                <Setter
+                                    Property="TextColor"
+                                    Value="#941B13" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1.015" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="Pressed">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#F0BEB9" />
+
+                                <Setter
+                                    Property="TextColor"
+                                    Value="#7A1711" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="0.985" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                    </VisualStateGroup>
+
+                </VisualStateGroupList>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- HEADER BUTTON -->
+
+        <Style
+            x:Key="HeaderButtonStyle"
+            TargetType="Button">
+
+            <Setter
+                Property="BackgroundColor"
+                Value="#185C37" />
+
+            <Setter
+                Property="TextColor"
+                Value="White" />
+
+            <Setter
+                Property="BorderColor"
+                Value="#6FA688" />
+
+            <Setter
+                Property="BorderWidth"
+                Value="1" />
+
+            <Setter
+                Property="FontSize"
+                Value="13" />
+
+            <Setter
+                Property="HeightRequest"
+                Value="40" />
+
+            <Setter
+                Property="CornerRadius"
+                Value="5" />
+
+            <Setter
+                Property="Padding"
+                Value="15,4" />
+
+
+            <Setter
+                Property="VisualStateManager.VisualStateGroups">
+
+                <VisualStateGroupList>
+
+                    <VisualStateGroup x:Name="CommonStates">
+
+
+                        <VisualState x:Name="Normal">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#185C37" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="PointerOver">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#31845A" />
+
+                                <Setter
+                                    Property="BorderColor"
+                                    Value="#B4D8C4" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="1.02" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                        <VisualState x:Name="Pressed">
+
+                            <VisualState.Setters>
+
+                                <Setter
+                                    Property="BackgroundColor"
+                                    Value="#104A2D" />
+
+                                <Setter
+                                    Property="Scale"
+                                    Value="0.98" />
+
+                            </VisualState.Setters>
+
+                        </VisualState>
+
+
+                    </VisualStateGroup>
+
+                </VisualStateGroupList>
+
+            </Setter>
+
+        </Style>
+
+
+    </ContentPage.Resources>
+
+
+
+    <!-- ===================================================== -->
+    <!-- ROOT                                                  -->
+    <!-- ===================================================== -->
+
+    <Grid
+        RowDefinitions="72,*">
+
+
+        <!-- ================================================= -->
+        <!-- TOP HEADER                                        -->
+        <!-- ================================================= -->
+
+        <Border
+            Grid.Row="0"
+            BackgroundColor="#217346"
+            StrokeThickness="0">
+
+            <Grid
+                Padding="18,10"
+                ColumnDefinitions="Auto,*,Auto">
+
+
+                <!-- LOGO + TITLE -->
+
+                <HorizontalStackLayout
+                    Grid.Column="0"
+                    Spacing="13"
+                    VerticalOptions="Center">
+
+
+                    <!-- LOGO -->
+
+                    <Border
+                        WidthRequest="48"
+                        HeightRequest="48"
+                        BackgroundColor="White"
+                        Stroke="#D5E8DD"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 7"
+                        Padding="0">
+
+                        <Grid>
+
+                            <Border
+                                WidthRequest="32"
+                                HeightRequest="32"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                BackgroundColor="#E8F3EC"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 5">
+
+                                <Label
+                                    Text="DB"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    VerticalTextAlignment="Center"
+                                    TextColor="#217346"
+                                    FontSize="15"
+                                    FontAttributes="Bold" />
+
+                            </Border>
+
+                        </Grid>
+
+                    </Border>
+
+
+                    <!-- TITLE -->
+
+                    <VerticalStackLayout
+                        VerticalOptions="Center"
+                        Spacing="1">
+
+                        <Label
+                            Text="Table Database Manager"
+                            TextColor="White"
+                            FontSize="19"
+                            FontAttributes="Bold" />
+
+                        <Label
+                            Text="Desktop Database Editor"
+                            TextColor="#D8EBE0"
+                            FontSize="11" />
+
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
+
+
+
+                <!-- DATABASE -->
+
+                <HorizontalStackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="6">
+
+                    <Label
+                        Text="Database:"
+                        TextColor="#CFE5D8"
+                        FontSize="13"
+                        VerticalTextAlignment="Center" />
+
+                    <Label
+                        x:Name="DbNameLabel"
+                        Text="No database"
+                        TextColor="White"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        VerticalTextAlignment="Center" />
+
+                </HorizontalStackLayout>
+
+
+
+                <!-- FILE BUTTONS -->
+
+                <HorizontalStackLayout
+                    Grid.Column="2"
+                    Spacing="8"
+                    VerticalOptions="Center">
+
+                    <Button
+                        Text="New"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        Clicked="OnCreateDatabase" />
+
+                    <Button
+                        Text="Open"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        Clicked="OnLoadDatabase" />
+
+                    <Button
+                        Text="Save"
+                        Style="{StaticResource HeaderButtonStyle}"
+                        Clicked="OnSaveDatabase" />
+
+                </HorizontalStackLayout>
+
+            </Grid>
+
+        </Border>
+
+
+
+        <!-- ================================================= -->
+        <!-- MAIN AREA                                         -->
+        <!-- ================================================= -->
+
+        <Grid
+            x:Name="MainScroll"
+            Grid.Row="1"
+            IsVisible="False"
+            Padding="12"
+            ColumnDefinitions="300,*"
+            ColumnSpacing="12">
+
+
+            <!-- ================================================= -->
+            <!-- LEFT PANEL                                        -->
+            <!-- ================================================= -->
+
+            <Grid
+                Grid.Column="0"
+                RowDefinitions="*,*,*,*"
+                RowSpacing="10">
+
+
+                <!-- ============================================= -->
+                <!-- TABLE                                         -->
+                <!-- ============================================= -->
+
+                <Border
+                    Grid.Row="0"
+                    Style="{StaticResource SectionCardStyle}"
+                    VerticalOptions="Fill">
+
+                    <Grid
+                        RowDefinitions="Auto,Auto,Auto,*,Auto"
+                        RowSpacing="7">
+
+
+                        <HorizontalStackLayout
+                            Grid.Row="0"
+                            Spacing="8">
+
+                            <Border
+                                WidthRequest="27"
+                                HeightRequest="27"
+                                BackgroundColor="#E7F2EB"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 4">
+
+                                <Label
+                                    Text="T"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="#217346"
+                                    FontSize="12"
+                                    FontAttributes="Bold" />
+
+                            </Border>
+
+                            <Label
+                                Text="TABLE"
+                                Style="{StaticResource SectionTitleStyle}"
+                                VerticalTextAlignment="Center" />
+
+                        </HorizontalStackLayout>
+
+
+                        <BoxView
+                            Grid.Row="1"
+                            HeightRequest="1"
+                            Color="#E7E7E7" />
+
+
+                        <Label
+                            Grid.Row="2"
+                            Text="Table name"
+                            Style="{StaticResource FieldLabelStyle}" />
+
+
+                        <Entry
+                            Grid.Row="3"
+                            x:Name="TableNameEntry"
+                            Placeholder="Enter table name"
+                            Style="{StaticResource EditorStyle}"
+                            VerticalOptions="Start" />
+
+
+                        <Grid
+                            Grid.Row="4"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7">
+
+                            <Button
+                                Grid.Column="0"
+                                Text="Add Table"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Clicked="OnAddTable" />
+
+                            <Button
+                                Grid.Column="1"
+                                Text="Delete"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Clicked="OnDeleteTable" />
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+
+
+                <!-- ============================================= -->
+                <!-- COLUMN                                        -->
+                <!-- ============================================= -->
+
+                <Border
+                    Grid.Row="1"
+                    Style="{StaticResource SectionCardStyle}"
+                    VerticalOptions="Fill">
+
+                    <Grid
+                        RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+                        RowSpacing="6">
+
+
+                        <HorizontalStackLayout
+                            Grid.Row="0"
+                            Spacing="8">
+
+                            <Border
+                                WidthRequest="27"
+                                HeightRequest="27"
+                                BackgroundColor="#E7F2EB"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 4">
+
+                                <Label
+                                    Text="C"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="#217346"
+                                    FontSize="12"
+                                    FontAttributes="Bold" />
+
+                            </Border>
+
+                            <Label
+                                Text="COLUMN"
+                                Style="{StaticResource SectionTitleStyle}"
+                                VerticalTextAlignment="Center" />
+
+                        </HorizontalStackLayout>
+
+
+                        <BoxView
+                            Grid.Row="1"
+                            HeightRequest="1"
+                            Color="#E7E7E7" />
+
+
+                        <Grid
+                            Grid.Row="2"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7">
+
+                            <Label
+                                Grid.Column="0"
+                                Text="Column name"
+                                Style="{StaticResource FieldLabelStyle}" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="Data type"
+                                Style="{StaticResource FieldLabelStyle}" />
+
+                        </Grid>
+
+
+                        <Grid
+                            Grid.Row="3"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7">
+
+                            <Entry
+                                Grid.Column="0"
+                                x:Name="ColumnNameEntry"
+                                Placeholder="Column"
+                                Style="{StaticResource EditorStyle}" />
+
+                            <editors:SfComboBox
+                                Grid.Column="1"
+                                x:Name="TypeComboBox"
+                                ItemsSource="{Binding DataTypes}"
+                                Placeholder="Type"
+                                HeightRequest="38"
+                                SelectionChanged="OnTypeSelectionChanged" />
+
+                        </Grid>
+
+
+                        <!-- Interval fields -->
+
+                        <Grid
+                            Grid.Row="4"
+                            x:Name="BoundsPanel"
+                            IsVisible="False"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7">
+
+                            <Entry
+                                Grid.Column="0"
+                                x:Name="LowerBoundEntry"
+                                Placeholder="From"
+                                MaxLength="1"
+                                Style="{StaticResource EditorStyle}" />
+
+                            <Entry
+                                Grid.Column="1"
+                                x:Name="UpperBoundEntry"
+                                Placeholder="To"
+                                MaxLength="1"
+                                Style="{StaticResource EditorStyle}" />
+
+                        </Grid>
+
+
+                        <Grid
+                            Grid.Row="5"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7"
+                            VerticalOptions="End">
+
+                            <Button
+                                Grid.Column="0"
+                                Text="Add Column"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Clicked="OnAddColumn" />
+
+                            <Button
+                                Grid.Column="1"
+                                Text="Delete"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Clicked="OnDeleteColumn" />
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+
+
+                <!-- ============================================= -->
+                <!-- ROW                                           -->
+                <!-- ============================================= -->
+
+                <Border
+                    Grid.Row="2"
+                    Style="{StaticResource SectionCardStyle}"
+                    VerticalOptions="Fill">
+
+                    <Grid
+                        RowDefinitions="Auto,Auto,*,Auto"
+                        RowSpacing="7">
+
+
+                        <HorizontalStackLayout
+                            Grid.Row="0"
+                            Spacing="8">
+
+                            <Border
+                                WidthRequest="27"
+                                HeightRequest="27"
+                                BackgroundColor="#E7F2EB"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 4">
+
+                                <Label
+                                    Text="R"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="#217346"
+                                    FontSize="12"
+                                    FontAttributes="Bold" />
+
+                            </Border>
+
+                            <Label
+                                Text="ROW"
+                                Style="{StaticResource SectionTitleStyle}"
+                                VerticalTextAlignment="Center" />
+
+                        </HorizontalStackLayout>
+
+
+                        <BoxView
+                            Grid.Row="1"
+                            HeightRequest="1"
+                            Color="#E7E7E7" />
+
+
+                        <Label
+                            Grid.Row="2"
+                            Text="Manage rows of the selected table"
+                            FontSize="11"
+                            TextColor="#737373"
+                            VerticalOptions="Center" />
+
+
+                        <Grid
+                            Grid.Row="3"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="7">
+
+                            <Button
+                                Grid.Column="0"
+                                Text="Add Row"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Clicked="OnAddRow" />
+
+                            <Button
+                                Grid.Column="1"
+                                Text="Delete Row"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Clicked="OnDeleteRow" />
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+
+
+                <!-- ============================================= -->
+                <!-- INDIVIDUAL OPERATION                          -->
+                <!-- ============================================= -->
+
+                <Border
+                    Grid.Row="3"
+                    Style="{StaticResource SectionCardStyle}"
+                    VerticalOptions="Fill">
+
+                    <Grid
+                        RowDefinitions="Auto,Auto,Auto,*,Auto"
+                        RowSpacing="7">
+
+
+                        <HorizontalStackLayout
+                            Grid.Row="0"
+                            Spacing="8">
+
+                            <Border
+                                WidthRequest="27"
+                                HeightRequest="27"
+                                BackgroundColor="#E7F2EB"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 4">
+
+                                <Label
+                                    Text="J"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    TextColor="#217346"
+                                    FontSize="12"
+                                    FontAttributes="Bold" />
+
+                            </Border>
+
+
+                            <VerticalStackLayout
+                                VerticalOptions="Center"
+                                Spacing="0">
+
+                                <Label
+                                    Text="INDIVIDUAL OPERATION"
+                                    Style="{StaticResource SectionTitleStyle}" />
+
+                                <Label
+                                    Text="Variant 8"
+                                    FontSize="9"
+                                    TextColor="#8A8A8A" />
+
+                            </VerticalStackLayout>
+
+                        </HorizontalStackLayout>
+
+
+                        <BoxView
+                            Grid.Row="1"
+                            HeightRequest="1"
+                            Color="#E7E7E7" />
+
+
+                        <Label
+                            Grid.Row="2"
+                            Text="JOIN Tables"
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="#303030" />
+
+
+                        <Label
+                            Grid.Row="3"
+                            Text="Join two tables by a common field."
+                            FontSize="11"
+                            TextColor="#737373"
+                            VerticalOptions="Center" />
+
+
+                        <Button
+                            Grid.Row="4"
+                            Text="Join Tables"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Clicked="OnJoinTables" />
+
+                    </Grid>
+
+                </Border>
+
+
+            </Grid>
+
+
+
+            <!-- ================================================= -->
+            <!-- RIGHT WORKSPACE                                   -->
+            <!-- ================================================= -->
+
+            <Border
+                Grid.Column="1"
+                BackgroundColor="White"
+                Stroke="#D8DDD9"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 6"
+                Padding="0">
+
+
+                <Grid
+                    RowDefinitions="62,*">
+
+
+                    <!-- ========================================= -->
+                    <!-- WORKBOOK HEADER                           -->
+                    <!-- ========================================= -->
+
+                    <Grid
+                        Grid.Row="0"
+                        BackgroundColor="#FAFBFA"
+                        Padding="15,10">
+
+
+                        <VerticalStackLayout
+                            Spacing="2">
+
+                            <Label
+                                Text="WORKBOOK"
+                                FontSize="11"
+                                CharacterSpacing="1"
+                                FontAttributes="Bold"
+                                TextColor="#217346" />
+
+                            <Label
+                                Text="Choose a table below and edit its data directly"
+                                FontSize="11"
+                                TextColor="#777777" />
+
+                        </VerticalStackLayout>
+
+
+                    </Grid>
+
+
+
+                    <!-- ========================================= -->
+                    <!-- DATA GRID + TABLE TABS                    -->
+                    <!-- ========================================= -->
+
+                    <Grid
+                        Grid.Row="1"
+                        RowDefinitions="*,50">
+
+
+                        <!-- DATA GRID -->
+
+                        <syncfusion:SfDataGrid
+                            x:Name="DataGrid"
+                            Grid.Row="0"
+
+                            GridLinesVisibility="Both"
+                            HeaderGridLinesVisibility="Both"
+
+                            ColumnWidthMode="Fill"
+                            AllowResizingColumns="True"
+
+                            AllowEditing="True"
+
+                            SelectionMode="Single"
+                            SelectionUnit="Cell"
+
+                            NavigationMode="Cell"
+                            AllowSelectionOnPress="True"
+
+                            EditTapAction="OnDoubleTap"
+
+                            AutoGenerateColumnsMode="None"
+
+                            CurrentCellActivated="OnCurrentCellActivated"
+
+                            CurrentCellBeginEdit="OnCurrentCellBeginEdit"
+
+                            CurrentCellEndEdit="OnCurrentCellEndEdit">
+
+
+                            <syncfusion:SfDataGrid.DefaultStyle>
+
+                                <syncfusion:DataGridStyle
+
+                                    HeaderRowBackground="#E4F0E8"
+
+                                    HeaderRowTextColor="#202020"
+
+                                    HeaderRowFontAttributes="Bold"
+
+                                    HeaderGridLineColor="#B7CEBF"
+
+                                    GridLineColor="#D7DBD8"
+
+                                    RowBackground="White"
+
+                                    RowTextColor="#202020"
+
+                                    SelectionBackground="#E8F3EC"
+
+                                    SelectedRowTextColor="#202020"
+
+                                    CurrentCellBorderColor="#217346"
+
+                                    CurrentCellBorderWidth="3" />
+
+                            </syncfusion:SfDataGrid.DefaultStyle>
+
+                        </syncfusion:SfDataGrid>
+
+
+
+                        <!-- TABLE TABS -->
+
+                        <Border
+                            Grid.Row="1"
+                            BackgroundColor="#F2F3F2"
+                            Stroke="#D4D7D5"
+                            StrokeThickness="1"
+                            Padding="0">
+
+
+                            <tabView:SfTabView
+                                x:Name="TabView"
+
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill"
+
+                                HeightRequest="48"
+
+                                TabBarSize="48"
+
+                                TabBarBackground="#F2F3F2"
+
+                                IndicatorBackground="#217346"
+
+                                TabWidthMode="SizeToContent"
+
+                                SelectionChanged="OnTabSelectionChanged" />
+
+
+                        </Border>
+
+
+                    </Grid>
+
+                </Grid>
+
+            </Border>
+
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

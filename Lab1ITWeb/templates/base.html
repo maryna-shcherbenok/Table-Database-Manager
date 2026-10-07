@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Table Database Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="app-header">
+
+        <div class="brand-area">
+
+            <div class="app-logo">
+                <div class="app-logo-inner">
+                    DB
+                </div>
+            </div>
+
+            <div class="brand-text">
+                <div class="app-title">
+                    Table Database Manager
+                </div>
+
+                <div class="app-subtitle">
+                    Web Database Editor
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="database-title">
+
+            {% if database %}
+
+            <span>Database:</span>
+
+            <strong>
+                {{ database.name }}
+            </strong>
+
+            {% else %}
+
+            <span>Database:</span>
+            <strong>No database</strong>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button type="button"
+                    class="header-button"
+                    onclick="document.getElementById('new-db-dialog').showModal()">
+                New
+            </button>
+
+            <button type="button"
+                    class="header-button"
+                    onclick="document.getElementById('open-db-input').click()">
+                Open
+            </button>
+
+            {% if database %}
+
+            <a class="header-button"
+               href="{{ url_for('save_database') }}">
+                Save
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </header>
+
+
+    <form id="open-db-form"
+          method="post"
+          action="{{ url_for('open_database') }}"
+          enctype="multipart/form-data">
+
+        <input id="open-db-input"
+               name="database_file"
+               type="file"
+               accept=".json"
+               hidden
+               onchange="this.form.submit()">
+
+    </form>
+
+
+    <dialog id="new-db-dialog">
+
+        <form method="post"
+              action="{{ url_for('create_database') }}"
+              class="dialog-form">
+
+            <h2>New Database</h2>
+
+            <label>
+                Database name
+            </label>
+
+            <input type="text"
+                   name="name"
+                   placeholder="Enter database name"
+                   required>
+
+            <div class="dialog-actions">
+
+                <button type="button"
+                        class="secondary-button"
+                        onclick="document.getElementById('new-db-dialog').close()">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="primary-button">
+                    Create
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+    <div class="flash-container">
+
+        {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+            {{ message }}
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+    {% endwith %}
+
+
+    <main class="page-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <div id="ajax-message"
+         class="ajax-message"></div>
+
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"
+            defer></script>
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>
