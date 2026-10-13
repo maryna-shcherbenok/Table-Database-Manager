@@ -632,38 +632,42 @@
             <!-- LEFT PANEL                                        -->
             <!-- ================================================= -->
 
-            <Grid
+            <ScrollView
                 Grid.Column="0"
-                RowDefinitions="*,*,*,*"
-                RowSpacing="10">
+                Orientation="Vertical"
+                VerticalScrollBarVisibility="Always">
+
+                <Grid
+                    RowDefinitions="Auto,Auto,Auto,Auto"
+                    RowSpacing="10">
 
 
-                <!-- ============================================= -->
-                <!-- TABLE                                         -->
-                <!-- ============================================= -->
+                    <!-- ============================================= -->
+                    <!-- TABLE                                         -->
+                    <!-- ============================================= -->
 
-                <Border
+                    <Border
                     Grid.Row="0"
                     Style="{StaticResource SectionCardStyle}"
                     VerticalOptions="Fill">
 
-                    <Grid
-                        RowDefinitions="Auto,Auto,Auto,*,Auto"
+                        <Grid
+                        RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                         RowSpacing="7">
 
 
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Grid.Row="0"
                             Spacing="8">
 
-                            <Border
+                                <Border
                                 WidthRequest="27"
                                 HeightRequest="27"
                                 BackgroundColor="#E7F2EB"
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 4">
 
-                                <Label
+                                    <Label
                                     Text="T"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"
@@ -671,29 +675,29 @@
                                     FontSize="12"
                                     FontAttributes="Bold" />
 
-                            </Border>
+                                </Border>
 
-                            <Label
+                                <Label
                                 Text="TABLE"
                                 Style="{StaticResource SectionTitleStyle}"
                                 VerticalTextAlignment="Center" />
 
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
 
 
-                        <BoxView
+                            <BoxView
                             Grid.Row="1"
                             HeightRequest="1"
                             Color="#E7E7E7" />
 
 
-                        <Label
+                            <Label
                             Grid.Row="2"
                             Text="Table name"
                             Style="{StaticResource FieldLabelStyle}" />
 
 
-                        <Entry
+                            <Entry
                             Grid.Row="3"
                             x:Name="TableNameEntry"
                             Placeholder="Enter table name"
@@ -701,57 +705,57 @@
                             VerticalOptions="Start" />
 
 
-                        <Grid
+                            <Grid
                             Grid.Row="4"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7">
 
-                            <Button
+                                <Button
                                 Grid.Column="0"
                                 Text="Add Table"
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 Clicked="OnAddTable" />
 
-                            <Button
+                                <Button
                                 Grid.Column="1"
                                 Text="Delete"
                                 Style="{StaticResource DangerButtonStyle}"
                                 Clicked="OnDeleteTable" />
 
+                            </Grid>
+
                         </Grid>
 
-                    </Grid>
-
-                </Border>
+                    </Border>
 
 
 
-                <!-- ============================================= -->
-                <!-- COLUMN                                        -->
-                <!-- ============================================= -->
+                    <!-- ============================================= -->
+                    <!-- COLUMN                                        -->
+                    <!-- ============================================= -->
 
-                <Border
+                    <Border
                     Grid.Row="1"
                     Style="{StaticResource SectionCardStyle}"
                     VerticalOptions="Fill">
 
-                    <Grid
-                        RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+                        <Grid
+                        RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
                         RowSpacing="6">
 
 
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Grid.Row="0"
                             Spacing="8">
 
-                            <Border
+                                <Border
                                 WidthRequest="27"
                                 HeightRequest="27"
                                 BackgroundColor="#E7F2EB"
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 4">
 
-                                <Label
+                                    <Label
                                     Text="C"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"
@@ -759,52 +763,52 @@
                                     FontSize="12"
                                     FontAttributes="Bold" />
 
-                            </Border>
+                                </Border>
 
-                            <Label
+                                <Label
                                 Text="COLUMN"
                                 Style="{StaticResource SectionTitleStyle}"
                                 VerticalTextAlignment="Center" />
 
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
 
 
-                        <BoxView
+                            <BoxView
                             Grid.Row="1"
                             HeightRequest="1"
                             Color="#E7E7E7" />
 
 
-                        <Grid
+                            <Grid
                             Grid.Row="2"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7">
 
-                            <Label
+                                <Label
                                 Grid.Column="0"
                                 Text="Column name"
                                 Style="{StaticResource FieldLabelStyle}" />
 
-                            <Label
+                                <Label
                                 Grid.Column="1"
                                 Text="Data type"
                                 Style="{StaticResource FieldLabelStyle}" />
 
-                        </Grid>
+                            </Grid>
 
 
-                        <Grid
+                            <Grid
                             Grid.Row="3"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7">
 
-                            <Entry
+                                <Entry
                                 Grid.Column="0"
                                 x:Name="ColumnNameEntry"
                                 Placeholder="Column"
                                 Style="{StaticResource EditorStyle}" />
 
-                            <editors:SfComboBox
+                                <editors:SfComboBox
                                 Grid.Column="1"
                                 x:Name="TypeComboBox"
                                 ItemsSource="{Binding DataTypes}"
@@ -812,87 +816,87 @@
                                 HeightRequest="38"
                                 SelectionChanged="OnTypeSelectionChanged" />
 
-                        </Grid>
+                            </Grid>
 
 
-                        <!-- Interval fields -->
+                            <!-- Interval fields -->
 
-                        <Grid
+                            <Grid
                             Grid.Row="4"
                             x:Name="BoundsPanel"
                             IsVisible="False"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7">
 
-                            <Entry
+                                <Entry
                                 Grid.Column="0"
                                 x:Name="LowerBoundEntry"
                                 Placeholder="From"
                                 MaxLength="1"
                                 Style="{StaticResource EditorStyle}" />
 
-                            <Entry
+                                <Entry
                                 Grid.Column="1"
                                 x:Name="UpperBoundEntry"
                                 Placeholder="To"
                                 MaxLength="1"
                                 Style="{StaticResource EditorStyle}" />
 
-                        </Grid>
+                            </Grid>
 
 
-                        <Grid
+                            <Grid
                             Grid.Row="5"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7"
                             VerticalOptions="End">
 
-                            <Button
+                                <Button
                                 Grid.Column="0"
                                 Text="Add Column"
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 Clicked="OnAddColumn" />
 
-                            <Button
+                                <Button
                                 Grid.Column="1"
                                 Text="Delete"
                                 Style="{StaticResource DangerButtonStyle}"
                                 Clicked="OnDeleteColumn" />
 
+                            </Grid>
+
                         </Grid>
 
-                    </Grid>
-
-                </Border>
+                    </Border>
 
 
 
-                <!-- ============================================= -->
-                <!-- ROW                                           -->
-                <!-- ============================================= -->
+                    <!-- ============================================= -->
+                    <!-- ROW                                           -->
+                    <!-- ============================================= -->
 
-                <Border
+                    <Border
                     Grid.Row="2"
                     Style="{StaticResource SectionCardStyle}"
                     VerticalOptions="Fill">
 
-                    <Grid
-                        RowDefinitions="Auto,Auto,*,Auto"
+                        <Grid
+                        RowDefinitions="Auto,Auto,Auto,Auto"
                         RowSpacing="7">
 
 
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Grid.Row="0"
                             Spacing="8">
 
-                            <Border
+                                <Border
                                 WidthRequest="27"
                                 HeightRequest="27"
                                 BackgroundColor="#E7F2EB"
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 4">
 
-                                <Label
+                                    <Label
                                     Text="R"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"
@@ -900,23 +904,23 @@
                                     FontSize="12"
                                     FontAttributes="Bold" />
 
-                            </Border>
+                                </Border>
 
-                            <Label
+                                <Label
                                 Text="ROW"
                                 Style="{StaticResource SectionTitleStyle}"
                                 VerticalTextAlignment="Center" />
 
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
 
 
-                        <BoxView
+                            <BoxView
                             Grid.Row="1"
                             HeightRequest="1"
                             Color="#E7E7E7" />
 
 
-                        <Label
+                            <Label
                             Grid.Row="2"
                             Text="Manage rows of the selected table"
                             FontSize="11"
@@ -924,57 +928,57 @@
                             VerticalOptions="Center" />
 
 
-                        <Grid
+                            <Grid
                             Grid.Row="3"
                             ColumnDefinitions="*,*"
                             ColumnSpacing="7">
 
-                            <Button
+                                <Button
                                 Grid.Column="0"
                                 Text="Add Row"
                                 Style="{StaticResource PrimaryButtonStyle}"
                                 Clicked="OnAddRow" />
 
-                            <Button
+                                <Button
                                 Grid.Column="1"
                                 Text="Delete Row"
                                 Style="{StaticResource DangerButtonStyle}"
                                 Clicked="OnDeleteRow" />
 
+                            </Grid>
+
                         </Grid>
 
-                    </Grid>
-
-                </Border>
+                    </Border>
 
 
 
-                <!-- ============================================= -->
-                <!-- INDIVIDUAL OPERATION                          -->
-                <!-- ============================================= -->
+                    <!-- ============================================= -->
+                    <!-- INDIVIDUAL OPERATION                          -->
+                    <!-- ============================================= -->
 
-                <Border
+                    <Border
                     Grid.Row="3"
                     Style="{StaticResource SectionCardStyle}"
                     VerticalOptions="Fill">
 
-                    <Grid
-                        RowDefinitions="Auto,Auto,Auto,*,Auto"
+                        <Grid
+                        RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                         RowSpacing="7">
 
 
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Grid.Row="0"
                             Spacing="8">
 
-                            <Border
+                                <Border
                                 WidthRequest="27"
                                 HeightRequest="27"
                                 BackgroundColor="#E7F2EB"
                                 StrokeThickness="0"
                                 StrokeShape="RoundRectangle 4">
 
-                                <Label
+                                    <Label
                                     Text="J"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"
@@ -982,34 +986,34 @@
                                     FontSize="12"
                                     FontAttributes="Bold" />
 
-                            </Border>
+                                </Border>
 
 
-                            <VerticalStackLayout
+                                <VerticalStackLayout
                                 VerticalOptions="Center"
                                 Spacing="0">
 
-                                <Label
+                                    <Label
                                     Text="INDIVIDUAL OPERATION"
                                     Style="{StaticResource SectionTitleStyle}" />
 
-                                <Label
+                                    <Label
                                     Text="Variant 8"
                                     FontSize="9"
                                     TextColor="#8A8A8A" />
 
-                            </VerticalStackLayout>
+                                </VerticalStackLayout>
 
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
 
 
-                        <BoxView
+                            <BoxView
                             Grid.Row="1"
                             HeightRequest="1"
                             Color="#E7E7E7" />
 
 
-                        <Label
+                            <Label
                             Grid.Row="2"
                             Text="JOIN Tables"
                             FontSize="13"
@@ -1017,7 +1021,7 @@
                             TextColor="#303030" />
 
 
-                        <Label
+                            <Label
                             Grid.Row="3"
                             Text="Join two tables by a common field."
                             FontSize="11"
@@ -1025,19 +1029,20 @@
                             VerticalOptions="Center" />
 
 
-                        <Button
+                            <Button
                             Grid.Row="4"
                             Text="Join Tables"
                             Style="{StaticResource PrimaryButtonStyle}"
                             Clicked="OnJoinTables" />
 
-                    </Grid>
+                        </Grid>
 
-                </Border>
+                    </Border>
 
 
-            </Grid>
+                </Grid>
 
+            </ScrollView>
 
 
             <!-- ================================================= -->

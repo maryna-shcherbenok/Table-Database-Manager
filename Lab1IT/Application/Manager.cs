@@ -311,15 +311,28 @@ public class Manager
             Column sourceColumn =
                 secondTable.Columns[i];
 
-            string resultName =
+            string baseName =
                 sourceColumn.Name;
 
-            // Avoid duplicate column names.
+            // Add table prefix if needed.
             if (resultTable.GetColumn(
-                    resultName) is not null)
+                    baseName) is not null)
+            {
+                baseName =
+                    $"{secondTable.Name}_{baseName}";
+            }
+
+            string resultName = baseName;
+            int suffix = 2;
+
+            // Ensure the final name is unique.
+            while (resultTable.GetColumn(
+                       resultName) is not null)
             {
                 resultName =
-                    $"{secondTable.Name}_{resultName}";
+                    $"{baseName}_{suffix}";
+
+                suffix++;
             }
 
             Column resultColumn =

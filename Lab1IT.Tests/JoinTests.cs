@@ -190,4 +190,31 @@ public class JoinTests
                     "Other",
                     "id"));
     }
+
+    [Test]
+    public void JoinTables_ConflictingColumnNames_GeneratesUniqueNames()
+    {
+        _manager.CreateColumn("Students", "score", "integer");
+        _manager.CreateColumn("Students", "Grades_score", "integer");
+        _manager.CreateColumn("Grades", "score", "integer");
+
+        Table result = _manager.JoinTables(
+            "Students", "Grades", "id");
+
+        string[] columnNames = result.Columns
+            .Select(c => c.Name)
+            .ToArray();
+
+        Assert.That(
+            columnNames.Distinct(
+                StringComparer.OrdinalIgnoreCase).Count(),
+            Is.EqualTo(columnNames.Length)
+        );
+
+        Assert.That(columnNames,
+            Does.Contain("Grades_score_2"));
+
+        Assert.That(result.Rows.Count,
+            Is.EqualTo(2));
+    }
 }
